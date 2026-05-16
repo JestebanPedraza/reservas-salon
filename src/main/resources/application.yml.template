@@ -1,0 +1,25 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: reservas
+    datasource:
+        url: jdbc:postgresql://localhost:5432/reservas_db
+        username: ${DB_USER:postgres}
+        password: ${DB_PASS:postgres}
+    jpa:
+        hibernate:
+            ddl-auto: validate
+        show-sql: true
+    flyway:
+        enabled: true
+        locations: classpath:db/migration
+
+app:
+    jwt:
+        secret: ${JWT_SECRET:TU_SECRET_AQUI}
+        expiration-ms: 21600000
+
+notificaciones:
+    url: http://localhost:8081
