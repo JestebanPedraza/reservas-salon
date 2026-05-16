@@ -1,0 +1,1 @@
+ALTER TABLE salones ALTER COLUMN costo_hora TYPE NUMERIC(12,2);
