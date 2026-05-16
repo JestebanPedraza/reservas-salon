@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: reservas-db
+      POSTGRES_DB: reservas_db
     ports:
       - "5432:5432"
     volumes:
