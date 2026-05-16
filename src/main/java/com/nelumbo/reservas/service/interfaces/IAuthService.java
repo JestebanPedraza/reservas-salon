@@ -8,4 +8,5 @@ import com.nelumbo.reservas.dto.response.RegisterResponse;
 public interface IAuthService {
     RegisterResponse registerGestor(RegisterRequest request);
     AuthResponse login(LoginRequest request);
+    void logout(String token);
 }

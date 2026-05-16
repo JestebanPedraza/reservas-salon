@@ -12,6 +12,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.nelumbo.reservas.repository.TokenBlacklistRepository;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtUtil;
     private final UserDetailsService userDetailsService;
+    private final TokenBlacklistRepository tokenBlacklistRepository;
 
     @Override
     protected void doFilterInternal(
@@ -45,6 +48,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         userEmail = jwtUtil.extractUsername(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            
+            boolean isTokenBlacklisted = tokenBlacklistRepository.findByToken(jwt).isPresent();
+            
+            if (isTokenBlacklisted) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             
             if (jwtUtil.validateToken(jwt, userDetails)) {
