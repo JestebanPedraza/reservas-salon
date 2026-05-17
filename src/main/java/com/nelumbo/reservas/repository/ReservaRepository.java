@@ -20,6 +20,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 
     List<Reserva> findByDocumentoClienteContainingAndEstado(String documento, EstadoReserva estado);
 
+    List<Reserva> findByEstadoAndFechaCreacionBefore(EstadoReserva estado, LocalDateTime fecha);
+
     @Query("SELECT SUM(r.asistentes) FROM Reserva r " +
            "WHERE r.salon.id = :salonId " +
            "AND r.estado = :estado " +

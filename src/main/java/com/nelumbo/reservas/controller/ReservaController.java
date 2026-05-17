@@ -1,25 +1,28 @@
 package com.nelumbo.reservas.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.nelumbo.reservas.dto.request.FinalizarReservaRequest;
+import com.nelumbo.reservas.dto.request.RechazarReservaRequest;
 import com.nelumbo.reservas.dto.request.ReservaRequest;
+import com.nelumbo.reservas.dto.response.AccionReservaResponse;
 import com.nelumbo.reservas.dto.response.FinalizarReservaResponse;
 import com.nelumbo.reservas.dto.response.ReservaResponse;
 import com.nelumbo.reservas.service.interfaces.IReservaService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.nelumbo.reservas.dto.request.AprobarReservaRequest;
-import com.nelumbo.reservas.dto.request.FinalizarReservaRequest;
 
 
 @RestController
@@ -47,18 +50,22 @@ public class ReservaController {
         return ResponseEntity.ok(reservaService.buscarPorDocumento(documento));
     }
 
-    @PostMapping("/{reservaId}/aprobar")
-    public String aprobarReserva(@PathVariable Integer reservaId, @RequestBody AprobarReservaRequest request) {
-        //TODO: process POST request
-        
-        return request.toString();
+    @PostMapping("/{id}/aprobar")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<AccionReservaResponse> aprobar(@PathVariable Integer id) {
+        return ResponseEntity.ok(reservaService.aprobarReserva(id));
+    }
+
+    @PostMapping("/{id}/rechazar")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<AccionReservaResponse> rechazar(@PathVariable Integer id, @Valid @RequestBody RechazarReservaRequest request) {
+        return ResponseEntity.ok(reservaService.rechazarReserva(id, request));
     }
 
     @PostMapping("/finalizar")
-    public ResponseEntity<FinalizarReservaResponse> finalizarReserva(@RequestBody FinalizarReservaRequest request) {
+    @PreAuthorize("hasAuthority('GESTOR')")
+    public ResponseEntity<FinalizarReservaResponse> finalizarReserva(@Valid @RequestBody FinalizarReservaRequest request) {
         return ResponseEntity.ok(reservaService.finalizarReserva(request.getDocumentoCliente(), request.getSalonId()));
     }
-    
-
 
 }

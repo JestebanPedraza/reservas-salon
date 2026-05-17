@@ -2,29 +2,29 @@ package com.nelumbo.reservas.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import com.nelumbo.reservas.dto.request.ReservaRequest;
-import com.nelumbo.reservas.dto.response.ReservaResponse;
-import com.nelumbo.reservas.entity.enums.EstadoReserva;
-import com.nelumbo.reservas.entity.Reserva;
-import com.nelumbo.reservas.entity.Salon;
-import com.nelumbo.reservas.exception.BadRequestException;
-import com.nelumbo.reservas.repository.ReservaRepository;
-import com.nelumbo.reservas.service.interfaces.ISalonService;
-import com.nelumbo.reservas.service.interfaces.IReservaService;
-import com.nelumbo.reservas.service.interfaces.IHistoricoReservaService;
-
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.nelumbo.reservas.dto.request.RechazarReservaRequest;
+import com.nelumbo.reservas.dto.request.ReservaRequest;
+import com.nelumbo.reservas.dto.response.AccionReservaResponse;
 import com.nelumbo.reservas.dto.response.FinalizarReservaResponse;
+import com.nelumbo.reservas.dto.response.ReservaResponse;
+import com.nelumbo.reservas.entity.Reserva;
+import com.nelumbo.reservas.entity.Salon;
+import com.nelumbo.reservas.entity.enums.EstadoReserva;
+import com.nelumbo.reservas.exception.BadRequestException;
+import com.nelumbo.reservas.repository.ReservaRepository;
+import com.nelumbo.reservas.service.interfaces.IHistoricoReservaService;
+import com.nelumbo.reservas.service.interfaces.IReservaService;
+import com.nelumbo.reservas.service.interfaces.ISalonService;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +35,7 @@ public class ReservaServiceImpl implements IReservaService {
     private final IHistoricoReservaService historicoReservaService;
 
     private static final BigDecimal LIMITE_PREMIUM = new BigDecimal("500000.0");
+    private static final LocalDateTime LIMITE_EXPIRACION = LocalDateTime.now().minusHours(48);
 
     @Override
     @Transactional
@@ -126,14 +127,60 @@ public class ReservaServiceImpl implements IReservaService {
 
     @Override
     @Transactional
-    public void aprobarReserva(Integer id) {
-        // Por implementar
+    public AccionReservaResponse aprobarReserva(Integer id) {
+        Reserva reserva = reservaRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Reserva no encontrada"));
+
+        if (!reserva.getEstado().equals(EstadoReserva.PENDIENTE_APROBACION)) {
+            throw new BadRequestException("Solo se pueden aprobar reservas en estado PENDIENTE_APROBACION");
+        }
+
+        if (reserva.getFechaInicio().isBefore(LocalDateTime.now())) {
+            reserva.setEstado(EstadoReserva.EXPIRADA);
+            reservaRepository.save(reserva);
+            throw new BadRequestException("No se puede aprobar esta reserva porque su fecha de inicio ya pasó");
+        }
+
+        reserva.setEstado(EstadoReserva.ACTIVA);
+        reservaRepository.save(reserva);
+        
+        // TODO: Enviar notificación al gestor responsable usando el microservicio simulado
+        
+        return AccionReservaResponse.builder()
+                .mensaje("Reserva aprobada exitosamente")
+                .fecha(LocalDateTime.now())
+                .build();
     }
 
     @Override
     @Transactional
-    public void rechazarReserva(Integer id, String motivo) {
-        // Por implementar
+    public AccionReservaResponse rechazarReserva(Integer id, RechazarReservaRequest request) {
+        Reserva reserva = reservaRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Reserva no encontrada"));
+
+        if (!reserva.getEstado().equals(EstadoReserva.PENDIENTE_APROBACION)) {
+            throw new BadRequestException("Solo se pueden rechazar reservas en estado PENDIENTE_APROBACION");
+        }
+
+        reserva.setEstado(EstadoReserva.RECHAZADA);
+        reserva.setMotivoRechazo(request.getMotivo());
+        reservaRepository.save(reserva);
+
+        return AccionReservaResponse.builder()
+                .mensaje("Reserva rechazada exitosamente con motivo: " + request.getMotivo())
+                .fecha(LocalDateTime.now())
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public void expirarReservasPendientes() {
+        List<Reserva> pendientes = reservaRepository.findByEstadoAndFechaCreacionBefore(EstadoReserva.PENDIENTE_APROBACION, LIMITE_EXPIRACION);
+        
+        pendientes.forEach(r -> {
+            r.setEstado(EstadoReserva.EXPIRADA);
+            reservaRepository.save(r);
+        });
     }
 
     private ReservaResponse mapToResponse(Reserva reserva) {
@@ -151,10 +198,4 @@ public class ReservaServiceImpl implements IReservaService {
                 .build();
     }
 
-    private FinalizarReservaResponse mapToFinalizarResponse(Reserva reserva) {
-        return FinalizarReservaResponse.builder()
-                .mensaje("Reserva finalizada exitosamente")
-                .totalCabrado(reserva.getTotalEstimado())
-                .build();
-    }
 }
