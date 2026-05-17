@@ -10,6 +10,7 @@ import com.nelumbo.reservas.dto.request.SucursalRequest;
 import com.nelumbo.reservas.dto.response.SucursalResponse;
 import com.nelumbo.reservas.entity.Sucursal;
 import com.nelumbo.reservas.entity.User;
+import com.nelumbo.reservas.entity.enums.RoleName;
 import com.nelumbo.reservas.exception.BadRequestException;
 import com.nelumbo.reservas.repository.SucursalRepository;
 import com.nelumbo.reservas.repository.UserRepository;
@@ -30,7 +31,7 @@ public class SucursalServiceImpl implements ISucursalService {
         User gestor = userRepository.findById(request.getGestorId())
                 .orElseThrow(() -> new BadRequestException("Gestor no encontrado"));
 
-        if (!gestor.getRole().getNombre().equals("GESTOR")) {
+        if (!gestor.getRole().getNombre().equals(RoleName.GESTOR.name())) {
             throw new BadRequestException("El usuario asignado debe tener el rol GESTOR");
         }
 
@@ -53,7 +54,7 @@ public class SucursalServiceImpl implements ISucursalService {
         User gestor = userRepository.findById(request.getGestorId())
                 .orElseThrow(() -> new BadRequestException("Gestor no encontrado"));
 
-        if (!gestor.getRole().getNombre().equals("GESTOR")) {
+        if (!gestor.getRole().getNombre().equals(RoleName.GESTOR.name())) {
             throw new BadRequestException("El usuario asignado debe tener el rol GESTOR");
         }
 
