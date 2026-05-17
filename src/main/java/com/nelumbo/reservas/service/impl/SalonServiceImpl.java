@@ -91,6 +91,13 @@ public class SalonServiceImpl implements ISalonService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Salon findSalonById(Integer id) {
+        return salonRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Salón no encontrado"));
+    }
+
     private SalonResponse mapToResponse(Salon salon) {
         return SalonResponse.builder()
                 .id(salon.getId())

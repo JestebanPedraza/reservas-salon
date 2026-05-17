@@ -2,6 +2,7 @@ package com.nelumbo.reservas.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import com.nelumbo.reservas.entity.enums.EstadoReserva;
 @Table(name = "reservas")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reserva {
@@ -22,11 +24,11 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nombre_cliente", nullable = false, length = 100)
-    private String nombreCliente;
-
     @Column(name = "documento_cliente", nullable = false, length = 12)
     private String documentoCliente;
+
+    @Column(name = "nombre_cliente", nullable = false, length = 100)
+    private String nombreCliente;
 
     @Column(name = "fecha_inicio", nullable = false)
     private LocalDateTime fechaInicio;
