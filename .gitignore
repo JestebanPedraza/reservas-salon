@@ -34,3 +34,11 @@ build/
 
 ### Custom ###
 src/main/resources/application.yml
+
+# Dependencias del microservicio de notificaciones
+reservas/microservicio-notificaciones/node_modules/
+reservas/microservicio-notificaciones/dist/
+reservas/microservicio-notificaciones/.venv/
+reservas/microservicio-notificaciones/.env
+reservas/microservicio-notificaciones/npm-debug.log*
+reservas/microservicio-notificaciones/pnpm-debug.log*
