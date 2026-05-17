@@ -2,14 +2,16 @@ package com.nelumbo.reservas.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "sucursal")
+@Table(name = "sucursales")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Sucursal {
@@ -23,4 +25,8 @@ public class Sucursal {
 
     @Column(nullable = false, length = 150)
     private String direccion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gestor_id", nullable = false)
+    private User gestor;
 }
