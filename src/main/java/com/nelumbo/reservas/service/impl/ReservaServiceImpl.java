@@ -19,6 +19,7 @@ import com.nelumbo.reservas.entity.Reserva;
 import com.nelumbo.reservas.entity.Salon;
 import com.nelumbo.reservas.entity.enums.EstadoReserva;
 import com.nelumbo.reservas.exception.BadRequestException;
+import com.nelumbo.reservas.integration.notificaciones.NotificacionHelper;
 import com.nelumbo.reservas.repository.ReservaRepository;
 import com.nelumbo.reservas.service.interfaces.IHistoricoReservaService;
 import com.nelumbo.reservas.service.interfaces.IReservaService;
@@ -33,6 +34,7 @@ public class ReservaServiceImpl implements IReservaService {
     private final ReservaRepository reservaRepository;
     private final ISalonService salonService;
     private final IHistoricoReservaService historicoReservaService;
+    private final NotificacionHelper notificacionHelper;
 
     private static final BigDecimal LIMITE_PREMIUM = new BigDecimal("500000.0");
     private static final LocalDateTime LIMITE_EXPIRACION = LocalDateTime.now().minusHours(48);
@@ -144,7 +146,7 @@ public class ReservaServiceImpl implements IReservaService {
         reserva.setEstado(EstadoReserva.ACTIVA);
         reservaRepository.save(reserva);
         
-        // TODO: Enviar notificación al gestor responsable usando el microservicio simulado
+        notificacionHelper.enviarNotificacion(reserva, "La reserva ha sido aprobada y ahora está ACTIVA.");
         
         return AccionReservaResponse.builder()
                 .mensaje("Reserva aprobada exitosamente")
@@ -165,6 +167,8 @@ public class ReservaServiceImpl implements IReservaService {
         reserva.setEstado(EstadoReserva.RECHAZADA);
         reserva.setMotivoRechazo(request.getMotivo());
         reservaRepository.save(reserva);
+
+        notificacionHelper.enviarNotificacion(reserva, "La reserva ha sido rechazada con motivo: " + request.getMotivo());
 
         return AccionReservaResponse.builder()
                 .mensaje("Reserva rechazada exitosamente con motivo: " + request.getMotivo())

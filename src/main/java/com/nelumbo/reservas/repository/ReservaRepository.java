@@ -1,15 +1,17 @@
 package com.nelumbo.reservas.repository;
 
-import com.nelumbo.reservas.entity.Reserva;
-import com.nelumbo.reservas.entity.enums.EstadoReserva;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import com.nelumbo.reservas.dto.response.TopClientes;
+import com.nelumbo.reservas.entity.Reserva;
+import com.nelumbo.reservas.entity.enums.EstadoReserva;
 
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
@@ -33,6 +35,16 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                                         @Param("fin") LocalDateTime fin,
                                         @Param("estado") EstadoReserva estado);
 
-    // Buscar reserva activa por documento y salón
     Optional<Reserva> findByDocumentoClienteAndSalonIdAndEstado(String documento, Integer salonId, EstadoReserva estado);
+
+    @Query(value = "SELECT r.documento_cliente as documentoCliente, r.nombre_cliente as nombreCliente, COUNT(r.id) as totalReservas " +
+                   "FROM reservas r GROUP BY r.documento_cliente, r.nombre_cliente " +
+                   "ORDER BY totalReservas DESC LIMIT 10", nativeQuery = true)
+    List<TopClientes> findTop10ClientesGeneral();
+
+    @Query(value = "SELECT r.documento_cliente as documentoCliente, r.nombre_cliente as nombreCliente, COUNT(r.id) as totalReservas " +
+                   "FROM reservas r WHERE r.salon_id = :salonId " +
+                   "GROUP BY r.documento_cliente, r.nombre_cliente " +
+                   "ORDER BY totalReservas DESC LIMIT 10", nativeQuery = true)
+    List<TopClientes> findTop10ClientesBySalon(@Param("salonId") Integer salonId);
 }

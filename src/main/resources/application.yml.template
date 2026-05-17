@@ -22,4 +22,4 @@ app:
         expiration-ms: 21600000
 
 notificaciones:
-    url: http://localhost:8081
+    url: http://microservicio-notificaciones:8081
