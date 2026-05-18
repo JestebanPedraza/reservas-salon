@@ -1,0 +1,2199 @@
+{
+  "info": {
+    "_postman_id": "99072faa-df0c-4579-8de3-0e466962ee16",
+    "name": "Sistema de Reservas API",
+    "description": "API para la gestión de reservas de salones, indicadores y autenticación.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48091414"
+  },
+  "item": [
+    {
+      "name": "sucursales",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Obtener sucursal por ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/sucursales/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "sucursales",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "9997"
+                    }
+                  ]
+                },
+                "description": "Busca la información detallada de una sucursal"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sucursales/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sucursales",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9997"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 2350,\n  \"nombre\": \"string\",\n  \"direccion\": \"string\",\n  \"nombreGestor\": \"string\",\n  \"emailGestor\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Actualizar sucursal",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"direccion\": \"string\",\n  \"gestorId\": 2022,\n  \"nombre\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/sucursales/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "sucursales",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "9997"
+                    }
+                  ]
+                },
+                "description": "Modifica los datos de una sucursal existente (Solo ADMIN)"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"direccion\": \"string\",\n  \"gestorId\": 2022,\n  \"nombre\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/sucursales/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sucursales",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9997"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 2350,\n  \"nombre\": \"string\",\n  \"direccion\": \"string\",\n  \"nombreGestor\": \"string\",\n  \"emailGestor\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Eliminar sucursal",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/sucursales/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "sucursales",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "9997"
+                    }
+                  ]
+                },
+                "description": "Elimina físicamente una sucursal del sistema (Solo ADMIN)"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sucursales/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sucursales",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9997"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Listar todas las sucursales",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sucursales",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "sucursales"
+              ]
+            },
+            "description": "Retorna una lista de todas las sucursales registradas"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/sucursales",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "sucursales"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 5005,\n    \"nombre\": \"string\",\n    \"direccion\": \"string\",\n    \"nombreGestor\": \"string\",\n    \"emailGestor\": \"string\"\n  },\n  {\n    \"id\": 9823,\n    \"nombre\": \"string\",\n    \"direccion\": \"string\",\n    \"nombreGestor\": \"string\",\n    \"emailGestor\": \"string\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Crear sucursal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"direccion\": \"string\",\n  \"gestorId\": 2022,\n  \"nombre\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sucursales",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "sucursales"
+              ]
+            },
+            "description": "Registra una nueva sucursal física (Solo ADMIN)"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"direccion\": \"string\",\n  \"gestorId\": 2022,\n  \"nombre\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/sucursales",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "sucursales"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 2350,\n  \"nombre\": \"string\",\n  \"direccion\": \"string\",\n  \"nombreGestor\": \"string\",\n  \"emailGestor\": \"string\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "salones",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Obtener salón por ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/salones/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "salones",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "9997"
+                    }
+                  ]
+                },
+                "description": "Busca la información detallada de un salón"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/salones/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "salones",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9997"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 3135,\n  \"nombre\": \"string\",\n  \"capacidadMaxima\": 2662,\n  \"costoHora\": 3198.5794240756536,\n  \"sucursal\": \"string\",\n  \"nombreGestor\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Actualizar salón",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"capacidadMaxima\": 652,\n  \"costoHora\": 9426.45444110722,\n  \"nombre\": \"string\",\n  \"sucursalId\": 3934\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/salones/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "salones",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "9997"
+                    }
+                  ]
+                },
+                "description": "Modifica los datos de un salón existente (Solo ADMIN)"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"capacidadMaxima\": 652,\n  \"costoHora\": 9426.45444110722,\n  \"nombre\": \"string\",\n  \"sucursalId\": 3934\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/salones/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "salones",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9997"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 3135,\n  \"nombre\": \"string\",\n  \"capacidadMaxima\": 2662,\n  \"costoHora\": 3198.5794240756536,\n  \"sucursal\": \"string\",\n  \"nombreGestor\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Eliminar salón",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/salones/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "salones",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "9997"
+                    }
+                  ]
+                },
+                "description": "Elimina físicamente un salón del sistema (Solo ADMIN)"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/salones/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "salones",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9997"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sucursal",
+          "item": [
+            {
+              "name": "{sucursalId}",
+              "item": [
+                {
+                  "name": "Listar salones por sucursal",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/salones/sucursal/:sucursalId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "salones",
+                        "sucursal",
+                        ":sucursalId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "sucursalId",
+                          "value": "9997"
+                        }
+                      ]
+                    },
+                    "description": "Retorna los salones pertenecientes a una sucursal específica"
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/salones/sucursal/:sucursalId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "salones",
+                            "sucursal",
+                            ":sucursalId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "sucursalId",
+                              "value": "9997"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "[\n  {\n    \"id\": 296,\n    \"nombre\": \"string\",\n    \"capacidadMaxima\": 9740,\n    \"costoHora\": 5008.969125298011,\n    \"sucursal\": \"string\",\n    \"nombreGestor\": \"string\"\n  },\n  {\n    \"id\": 2910,\n    \"nombre\": \"string\",\n    \"capacidadMaxima\": 7461,\n    \"costoHora\": 870.4372981076936,\n    \"sucursal\": \"string\",\n    \"nombreGestor\": \"string\"\n  }\n]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Listar todos los salones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/salones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "salones"
+              ]
+            },
+            "description": "Retorna una lista de todos los salones registrados"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/salones",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "salones"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 296,\n    \"nombre\": \"string\",\n    \"capacidadMaxima\": 9740,\n    \"costoHora\": 5008.969125298011,\n    \"sucursal\": \"string\",\n    \"nombreGestor\": \"string\"\n  },\n  {\n    \"id\": 2910,\n    \"nombre\": \"string\",\n    \"capacidadMaxima\": 7461,\n    \"costoHora\": 870.4372981076936,\n    \"sucursal\": \"string\",\n    \"nombreGestor\": \"string\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Crear salón",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"capacidadMaxima\": 652,\n  \"costoHora\": 9426.45444110722,\n  \"nombre\": \"string\",\n  \"sucursalId\": 3934\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/salones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "salones"
+              ]
+            },
+            "description": "Registra un nuevo salón (Solo ADMIN)"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"capacidadMaxima\": 652,\n  \"costoHora\": 9426.45444110722,\n  \"nombre\": \"string\",\n  \"sucursalId\": 3934\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/salones",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "salones"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 3135,\n  \"nombre\": \"string\",\n  \"capacidadMaxima\": 2662,\n  \"costoHora\": 3198.5794240756536,\n  \"sucursal\": \"string\",\n  \"nombreGestor\": \"string\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reservas",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "rechazar",
+              "item": [
+                {
+                  "name": "Rechazar reserva",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"motivo\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/reservas/:id/rechazar",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reservas",
+                        ":id",
+                        "rechazar"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9997"
+                        }
+                      ]
+                    },
+                    "description": "Rechaza una reserva pendiente y notifica al gestor (Solo ADMIN)"
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"motivo\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/reservas/:id/rechazar",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reservas",
+                            ":id",
+                            "rechazar"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "9997"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"mensaje\": \"string\",\n  \"fecha\": \"2002-10-24T13:16:45.357Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "aprobar",
+              "item": [
+                {
+                  "name": "Aprobar reserva",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reservas/:id/aprobar",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reservas",
+                        ":id",
+                        "aprobar"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9997"
+                        }
+                      ]
+                    },
+                    "description": "Cambia el estado de una reserva PENDIENTE_APROBACION a ACTIVA (Solo ADMIN)"
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reservas/:id/aprobar",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reservas",
+                            ":id",
+                            "aprobar"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "9997"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"mensaje\": \"string\",\n  \"fecha\": \"2002-10-24T13:16:45.357Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "finalizar",
+          "item": [
+            {
+              "name": "Finalizar reserva",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"documentoCliente\": \"553517866\",\n  \"salonId\": 8937\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/reservas/finalizar",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reservas",
+                    "finalizar"
+                  ]
+                },
+                "description": "Termina una reserva activa, calcula el cobro final y guarda el histórico"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"documentoCliente\": \"553517866\",\n  \"salonId\": 8937\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/reservas/finalizar",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reservas",
+                        "finalizar"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"mensaje\": \"string\",\n  \"totalCabrado\": 61.61963850330076\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "buscar",
+          "item": [
+            {
+              "name": "Buscar por documento",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/reservas/buscar?documento=string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reservas",
+                    "buscar"
+                  ],
+                  "query": [
+                    {
+                      "key": "documento",
+                      "value": "string"
+                    }
+                  ]
+                },
+                "description": "Busca reservas activas por documento del cliente (coincidencia parcial)"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reservas/buscar?documento=string",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reservas",
+                        "buscar"
+                      ],
+                      "query": [
+                        {
+                          "key": "documento",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": 3769,\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"salonId\": 5702,\n    \"salonNombre\": \"string\",\n    \"fechaInicio\": \"2025-04-25T04:12:12.497Z\",\n    \"fechaFinEstimada\": \"1968-07-13T14:37:51.721Z\",\n    \"asistentes\": 1862,\n    \"estado\": \"string\",\n    \"totalEstimado\": 3147.9471166489593\n  },\n  {\n    \"id\": 2274,\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"salonId\": 6292,\n    \"salonNombre\": \"string\",\n    \"fechaInicio\": \"2004-09-22T10:02:28.159Z\",\n    \"fechaFinEstimada\": \"1948-03-01T11:33:15.263Z\",\n    \"asistentes\": 6369,\n    \"estado\": \"string\",\n    \"totalEstimado\": 3192.577581423626\n  }\n]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "activas",
+          "item": [
+            {
+              "name": "{salonId}",
+              "item": [
+                {
+                  "name": "Listar reservas activas",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reservas/activas/:salonId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reservas",
+                        "activas",
+                        ":salonId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "salonId",
+                          "value": "9997"
+                        }
+                      ]
+                    },
+                    "description": "Lista todas las reservas con estado ACTIVA para un salón"
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reservas/activas/:salonId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reservas",
+                            "activas",
+                            ":salonId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "salonId",
+                              "value": "9997"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "[\n  {\n    \"id\": 3769,\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"salonId\": 5702,\n    \"salonNombre\": \"string\",\n    \"fechaInicio\": \"2025-04-25T04:12:12.497Z\",\n    \"fechaFinEstimada\": \"1968-07-13T14:37:51.721Z\",\n    \"asistentes\": 1862,\n    \"estado\": \"string\",\n    \"totalEstimado\": 3147.9471166489593\n  },\n  {\n    \"id\": 2274,\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"salonId\": 6292,\n    \"salonNombre\": \"string\",\n    \"fechaInicio\": \"2004-09-22T10:02:28.159Z\",\n    \"fechaFinEstimada\": \"1948-03-01T11:33:15.263Z\",\n    \"asistentes\": 6369,\n    \"estado\": \"string\",\n    \"totalEstimado\": 3192.577581423626\n  }\n]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Registrar reserva",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"asistentes\": 2841,\n  \"documentoCliente\": \"138847\",\n  \"fechaFinEstimada\": \"1963-03-28T03:36:59.503Z\",\n  \"fechaInicio\": \"1950-08-06T18:32:10.839Z\",\n  \"nombreCliente\": \"string\",\n  \"salonId\": 7000\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reservas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reservas"
+              ]
+            },
+            "description": "Crea una nueva reserva. Si el total supera 500k, queda en PENDIENTE_APROBACION"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"asistentes\": 2841,\n  \"documentoCliente\": \"138847\",\n  \"fechaFinEstimada\": \"1963-03-28T03:36:59.503Z\",\n  \"fechaInicio\": \"1950-08-06T18:32:10.839Z\",\n  \"nombreCliente\": \"string\",\n  \"salonId\": 7000\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/reservas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reservas"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 1269,\n  \"documentoCliente\": \"string\",\n  \"nombreCliente\": \"string\",\n  \"salonId\": 9845,\n  \"salonNombre\": \"string\",\n  \"fechaInicio\": \"1993-03-01T20:38:35.405Z\",\n  \"fechaFinEstimada\": \"2005-01-26T05:18:41.971Z\",\n  \"asistentes\": 8741,\n  \"estado\": \"string\",\n  \"totalEstimado\": 8081.862704203187\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "register",
+          "item": [
+            {
+              "name": "Registrar nuevo gestor",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"string\",\n  \"nombre\": \"string\",\n  \"password\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
+                },
+                "description": "Endpoint para registrar un usuario de tipo GESTOR"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"string\",\n  \"nombre\": \"string\",\n  \"password\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/register",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "register"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"mensaje\": \"string\",\n  \"email\": \"string\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "logout",
+          "item": [
+            {
+              "name": "Cerrar sesión",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/auth/logout",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "logout"
+                  ]
+                },
+                "description": "Invalida el token JWT actual"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/logout",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "logout"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "login",
+          "item": [
+            {
+              "name": "Iniciar sesión",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                },
+                "description": "Retorna un token JWT válido"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "login"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"token\": \"string\"\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "indicadores",
+      "item": [
+        {
+          "name": "top-sucursales",
+          "item": [
+            {
+              "name": "Top 3 sucursales",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/indicadores/top-sucursales",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "indicadores",
+                    "top-sucursales"
+                  ]
+                },
+                "description": "Retorna las 3 sucursales con mayor facturación en el mes actual"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/indicadores/top-sucursales",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "indicadores",
+                        "top-sucursales"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"sucursalNombre\": \"string\",\n    \"facturacion\": 9964.153130689332\n  },\n  {\n    \"sucursalNombre\": \"string\",\n    \"facturacion\": 1829.1717251820282\n  }\n]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "top-clientes-salon",
+          "item": [
+            {
+              "name": "{salonId}",
+              "item": [
+                {
+                  "name": "Top 10 clientes por salón",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/indicadores/top-clientes-salon/:salonId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "indicadores",
+                        "top-clientes-salon",
+                        ":salonId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "salonId",
+                          "value": "9997"
+                        }
+                      ]
+                    },
+                    "description": "Retorna los 10 clientes con más reservas en un salón específico"
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/indicadores/top-clientes-salon/:salonId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "indicadores",
+                            "top-clientes-salon",
+                            ":salonId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "salonId",
+                              "value": "9997"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "[\n  {\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"totalReservas\": 6508\n  },\n  {\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"totalReservas\": 8478\n  }\n]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "top-clientes-general",
+          "item": [
+            {
+              "name": "Top 10 clientes general",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/indicadores/top-clientes-general",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "indicadores",
+                    "top-clientes-general"
+                  ]
+                },
+                "description": "Retorna los 10 clientes con más reservas en todo el sistema"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/indicadores/top-clientes-general",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "indicadores",
+                        "top-clientes-general"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"totalReservas\": 6508\n  },\n  {\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"totalReservas\": 8478\n  }\n]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "salones",
+          "item": [
+            {
+              "name": "{salonId}",
+              "item": [
+                {
+                  "name": "ganancias",
+                  "item": [
+                    {
+                      "name": "Ganancias por salón",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/indicadores/salones/:salonId/ganancias?periodo=ANIO",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "indicadores",
+                            "salones",
+                            ":salonId",
+                            "ganancias"
+                          ],
+                          "query": [
+                            {
+                              "key": "periodo",
+                              "value": "ANIO"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "salonId",
+                              "value": "9997"
+                            }
+                          ]
+                        },
+                        "description": "Retorna las ganancias de un salón en un periodo específico (HOY, SEMANA, MES, ANIO)"
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/indicadores/salones/:salonId/ganancias?periodo=ANIO",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "indicadores",
+                                "salones",
+                                ":salonId",
+                                "ganancias"
+                              ],
+                              "query": [
+                                {
+                                  "key": "periodo",
+                                  "value": "ANIO"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "salonId",
+                                  "value": "9997"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"salonId\": 9711,\n  \"periodo\": \"ANIO\",\n  \"total\": 842.9600908969915\n}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "clientes-primerizos",
+          "item": [
+            {
+              "name": "Clientes primerizos",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/indicadores/clientes-primerizos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "indicadores",
+                    "clientes-primerizos"
+                  ]
+                },
+                "description": "Lista las reservas de clientes que reservan por primera vez en un salón"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/indicadores/clientes-primerizos",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "indicadores",
+                        "clientes-primerizos"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": 5754,\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"fechaInicio\": \"2004-12-02T14:09:50.210Z\",\n    \"fechaFinEstimada\": \"1954-02-23T08:18:55.116Z\",\n    \"totalEstimado\": 2714.2755041568266,\n    \"asistentes\": 9614,\n    \"fechaCreacion\": \"1980-05-22T18:32:29.703Z\",\n    \"estado\": \"ACTIVA\",\n    \"motivoRechazo\": \"string\",\n    \"salon\": {\n      \"id\": 3415,\n      \"nombre\": \"string\",\n      \"capacidadMaxima\": 9590,\n      \"costoHora\": 6699.309341975777,\n      \"sucursal\": {\n        \"id\": 7261,\n        \"nombre\": \"string\",\n        \"direccion\": \"string\",\n        \"gestor\": {\n          \"id\": 5045,\n          \"nombre\": \"string\",\n          \"email\": \"string\",\n          \"password\": \"string\",\n          \"role\": {\n            \"id\": 5547,\n            \"nombre\": \"string\"\n          }\n        }\n      }\n    }\n  },\n  {\n    \"id\": 7970,\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"fechaInicio\": \"1977-05-28T15:21:40.213Z\",\n    \"fechaFinEstimada\": \"1966-10-20T03:20:21.800Z\",\n    \"totalEstimado\": 3389.078727013892,\n    \"asistentes\": 9346,\n    \"fechaCreacion\": \"1948-10-10T01:54:18.649Z\",\n    \"estado\": \"FINALIZADA\",\n    \"motivoRechazo\": \"string\",\n    \"salon\": {\n      \"id\": 4749,\n      \"nombre\": \"string\",\n      \"capacidadMaxima\": 319,\n      \"costoHora\": 9098.14572894957,\n      \"sucursal\": {\n        \"id\": 4253,\n        \"nombre\": \"string\",\n        \"direccion\": \"string\",\n        \"gestor\": {\n          \"id\": 347,\n          \"nombre\": \"string\",\n          \"email\": \"string\",\n          \"password\": \"string\",\n          \"role\": {\n            \"id\": 2379,\n            \"nombre\": \"string\"\n          }\n        }\n      }\n    }\n  }\n]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "buscar-documento",
+          "item": [
+            {
+              "name": "Buscar reservas por documento",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/indicadores/buscar-documento?query=string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "indicadores",
+                    "buscar-documento"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "string"
+                    }
+                  ]
+                },
+                "description": "Busca reservas activas mediante coincidencia parcial del documento del cliente"
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/indicadores/buscar-documento?query=string",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "indicadores",
+                        "buscar-documento"
+                      ],
+                      "query": [
+                        {
+                          "key": "query",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": 3769,\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"salonId\": 5702,\n    \"salonNombre\": \"string\",\n    \"fechaInicio\": \"2025-04-25T04:12:12.497Z\",\n    \"fechaFinEstimada\": \"1968-07-13T14:37:51.721Z\",\n    \"asistentes\": 1862,\n    \"estado\": \"string\",\n    \"totalEstimado\": 3147.9471166489593\n  },\n  {\n    \"id\": 2274,\n    \"documentoCliente\": \"string\",\n    \"nombreCliente\": \"string\",\n    \"salonId\": 6292,\n    \"salonNombre\": \"string\",\n    \"fechaInicio\": \"2004-09-22T10:02:28.159Z\",\n    \"fechaFinEstimada\": \"1948-03-01T11:33:15.263Z\",\n    \"asistentes\": 6369,\n    \"estado\": \"string\",\n    \"totalEstimado\": 3192.577581423626\n  }\n]"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
