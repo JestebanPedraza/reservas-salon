@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.nelumbo.reservas.entity.enums.EstadoReserva;
+import com.nelumbo.reservas.enums.EstadoReserva;
 
 @Entity
 @Table(name = "reservas")

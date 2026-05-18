@@ -10,7 +10,7 @@ import com.nelumbo.reservas.dto.request.SucursalRequest;
 import com.nelumbo.reservas.dto.response.SucursalResponse;
 import com.nelumbo.reservas.entity.Sucursal;
 import com.nelumbo.reservas.entity.User;
-import com.nelumbo.reservas.entity.enums.RoleName;
+import com.nelumbo.reservas.enums.RoleName;
 import com.nelumbo.reservas.exception.BadRequestException;
 import com.nelumbo.reservas.repository.SucursalRepository;
 import com.nelumbo.reservas.repository.UserRepository;

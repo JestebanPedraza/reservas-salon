@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.nelumbo.reservas.dto.response.TopClientes;
+import com.nelumbo.reservas.dto.response.indicadores.TopClientes;
 import com.nelumbo.reservas.entity.Reserva;
-import com.nelumbo.reservas.entity.enums.EstadoReserva;
+import com.nelumbo.reservas.enums.EstadoReserva;
 
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
@@ -47,4 +47,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                    "GROUP BY r.documento_cliente, r.nombre_cliente " +
                    "ORDER BY totalReservas DESC LIMIT 10", nativeQuery = true)
     List<TopClientes> findTop10ClientesBySalon(@Param("salonId") Integer salonId);
+
+    @Query("SELECT r FROM Reserva r WHERE r.estado = 'ACTIVA' " +
+       "AND (SELECT COUNT(r2) FROM Reserva r2 WHERE r2.documentoCliente = r.documentoCliente " +
+       "AND r2.salon.id = r.salon.id) = 1")
+    List<Reserva> findClientesPrimerizos();
 }

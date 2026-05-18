@@ -17,7 +17,7 @@ import com.nelumbo.reservas.dto.response.FinalizarReservaResponse;
 import com.nelumbo.reservas.dto.response.ReservaResponse;
 import com.nelumbo.reservas.entity.Reserva;
 import com.nelumbo.reservas.entity.Salon;
-import com.nelumbo.reservas.entity.enums.EstadoReserva;
+import com.nelumbo.reservas.enums.EstadoReserva;
 import com.nelumbo.reservas.exception.BadRequestException;
 import com.nelumbo.reservas.integration.notificaciones.NotificacionHelper;
 import com.nelumbo.reservas.repository.ReservaRepository;
@@ -198,7 +198,7 @@ public class ReservaServiceImpl implements IReservaService {
                 .fechaFinEstimada(reserva.getFechaFinEstimada())
                 .totalEstimado(reserva.getTotalEstimado())
                 .asistentes(reserva.getAsistentes())
-                .estado(reserva.getEstado().name())
+                .estado(String.valueOf(reserva.getEstado()))
                 .build();
     }
 

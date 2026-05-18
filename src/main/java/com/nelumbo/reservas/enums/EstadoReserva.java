@@ -1,4 +1,4 @@
-package com.nelumbo.reservas.entity.enums;
+package com.nelumbo.reservas.enums;
 
 public enum EstadoReserva {
     PENDIENTE_APROBACION,
