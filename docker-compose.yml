@@ -20,6 +20,22 @@ services:
     ports:
       - "8081:8081"
 
+  api-reservas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-reservas
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/reservas_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - NOTIFICACIONES_URL=http://microservicio-notificaciones:8081/notificar
+    depends_on:
+      - postgres-db
+      - microservicio-notificaciones
 
 volumes:
     postgres-data:
