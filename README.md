@@ -45,6 +45,13 @@ Esta opción es la más rápida ya que configura la base de datos, el microservi
 5.  **Acceso**:
     *   API: `http://localhost:8080`
     *   Swagger UI: `http://localhost:8080/swagger-ui/index.html`
+6. **NOTA**:
+    Usuario administrador: 
+    ```
+    email: admin@mail.com
+    password: admin
+    ```
+    Con esas credenciale speudes empezar a crear gestores!
 
 ---
 
