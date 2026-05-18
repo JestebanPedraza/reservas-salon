@@ -27,9 +27,11 @@ import com.nelumbo.reservas.security.JwtService;
 import com.nelumbo.reservas.service.interfaces.IAuthService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements IAuthService {
 
     private final UserRepository userRepository;
@@ -43,12 +45,15 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     @Transactional
     public RegisterResponse registerGestor(RegisterRequest request) {
+        log.info("Iniciando registro de nuevo gestor con email: {}", request.getEmail());
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            log.warn("Intento de registro fallido: el email {} ya existe", request.getEmail());
             throw new RuntimeException("El email ya se encuentra registrado");
         }
 
         Role gestorRole = roleRepository.findByNombre("GESTOR");
         if (gestorRole == null) {
+            log.error("Error crítico: El rol GESTOR no existe en la base de datos");
             throw new RuntimeException("Error: El rol GESTOR no existe en la base de datos");
         }
 
@@ -60,18 +65,26 @@ public class AuthServiceImpl implements IAuthService {
 
         userRepository.save(user);
 
+        log.info("Gestor registrado exitosamente: {}", user.getEmail());
         return new RegisterResponse("Gestor registrado exitosamente", user.getEmail());
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
+        log.info("Intento de login para el usuario: {}", request.getEmail());
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
+        } catch (Exception e) {
+            log.warn("Login fallido para el usuario: {}. Razón: {}", request.getEmail(), e.getMessage());
+            throw e;
+        }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String token = jwtUtil.generateToken(userDetails);
 
+        log.info("Login exitoso para el usuario: {}", request.getEmail());
         return AuthResponse.builder()
                 .token(token)
                 .build();
@@ -82,6 +95,7 @@ public class AuthServiceImpl implements IAuthService {
     public void logout(String token) {
         if (token != null && token.startsWith("Bearer ")) {
             String jwt = token.substring(7);
+            log.info("Iniciando logout para token: {}...", jwt.substring(0, Math.min(jwt.length(), 10)));
             Date expirationDate = jwtUtil.extractExpiration(jwt);
             LocalDateTime expiry = expirationDate.toInstant()
                     .atZone(ZoneId.systemDefault())
@@ -93,6 +107,7 @@ public class AuthServiceImpl implements IAuthService {
                     .build();
 
             tokenBlacklistRepository.save(blacklistEntry);
+            log.info("Token invalidado exitosamente");
         }
         SecurityContextHolder.clearContext();
     }

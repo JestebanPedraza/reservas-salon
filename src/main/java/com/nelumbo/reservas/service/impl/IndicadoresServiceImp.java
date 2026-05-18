@@ -20,9 +20,11 @@ import com.nelumbo.reservas.repository.ReservaRepository;
 import com.nelumbo.reservas.service.interfaces.IIndicadoresService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class IndicadoresServiceImp implements IIndicadoresService {
     
     private final ReservaRepository reservaRepository;
@@ -31,24 +33,28 @@ public class IndicadoresServiceImp implements IIndicadoresService {
     @Override
     @Transactional(readOnly = true)
     public List<TopClientes> getTop10ClientesGeneral() {
+        log.info("Generando reporte de Top 10 Clientes General");
         return reservaRepository.findTop10ClientesGeneral();
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<TopClientes> getTop10ClientesPorSalon(Integer salonId) {
+        log.info("Generando reporte de Top 10 Clientes para el salón ID: {}", salonId);
         return reservaRepository.findTop10ClientesBySalon(salonId);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Reserva> getClientesPrimerizos() {
+        log.info("Consultando lista de clientes primerizos (primera reserva registrada)");
         return reservaRepository.findClientesPrimerizos();
     }
 
     @Override
     @Transactional(readOnly = true)
     public GananciasResponse getGananciasPorSalon(Integer salonId, PeriodoTipo periodo) {
+        log.info("Calculando ganancias para el salón ID: {} en el periodo: {}", salonId, periodo);
         LocalDateTime inicio = switch (periodo) {
             case HOY   -> LocalDate.now().atStartOfDay();
             case SEMANA -> LocalDate.now().with(DayOfWeek.MONDAY).atStartOfDay();
@@ -59,6 +65,7 @@ public class IndicadoresServiceImp implements IIndicadoresService {
         LocalDateTime fin = LocalDateTime.now();
         Double ganancias = historicoReservaRepository.sumGanancias(salonId, inicio, fin);
 
+        log.info("Cálculo finalizado para salón ID: {}. Ganancias: {}", salonId, ganancias);
         return GananciasResponse.builder()
                 .salonId(salonId)
                 .periodo(periodo)
@@ -69,6 +76,7 @@ public class IndicadoresServiceImp implements IIndicadoresService {
     @Override
     @Transactional(readOnly = true)
     public List<TopSucursalesFacturacionResponse> getTop3SucursalesMesActual() {
+        log.info("Generando ranking de Top 3 Sucursales con mayor facturación en el mes actual");
         LocalDateTime inicioMes = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay();
         return historicoReservaRepository.findTopSucursales(inicioMes, PageRequest.of(0, 3));
     }

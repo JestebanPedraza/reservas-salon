@@ -26,9 +26,11 @@ import com.nelumbo.reservas.service.interfaces.IReservaService;
 import com.nelumbo.reservas.service.interfaces.ISalonService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReservaServiceImpl implements IReservaService {
 
     private final ReservaRepository reservaRepository;
@@ -42,14 +44,17 @@ public class ReservaServiceImpl implements IReservaService {
     @Override
     @Transactional
     public ReservaResponse registrarReserva(ReservaRequest request) {
+        log.info("Iniciando registro de reserva para el cliente: {} en el salón ID: {}", request.getDocumentoCliente(), request.getSalonId());
 
         if (!request.getFechaFinEstimada().isAfter(request.getFechaInicio())) {
+            log.warn("Error en registro: Fecha de fin ({}) no es posterior a la de inicio ({})", request.getFechaFinEstimada(), request.getFechaInicio());
             throw new BadRequestException("La fecha de fin estimada debe ser posterior a la de inicio");
         }
 
         Salon salon = salonService.findSalonById(request.getSalonId());
 
         if (reservaRepository.existsByDocumentoClienteAndEstado(request.getDocumentoCliente(), EstadoReserva.ACTIVA)) {
+            log.warn("Error en registro: El cliente {} ya tiene una reserva activa", request.getDocumentoCliente());
             throw new BadRequestException("No se puede Registrar Reserva, ya existe una reserva activa para este documento en este u otro salón");
         }
 
@@ -58,6 +63,8 @@ public class ReservaServiceImpl implements IReservaService {
         
         int totalAsistentes = (ocupados != null ? ocupados : 0) + request.getAsistentes();
         if (totalAsistentes > salon.getCapacidadMaxima()) {
+            log.warn("Error en registro: Capacidad insuficiente en salón {}. Requerido: {}, Disponible: {}", 
+                salon.getNombre(), totalAsistentes, salon.getCapacidadMaxima());
             throw new BadRequestException("No se puede Registrar Reserva, capacidad insuficiente en el salón");
         }
 
@@ -65,6 +72,10 @@ public class ReservaServiceImpl implements IReservaService {
         BigDecimal totalEstimado = horas.multiply(salon.getCostoHora());
 
         EstadoReserva estadoInicial = (totalEstimado.compareTo(LIMITE_PREMIUM) > 0) ? EstadoReserva.PENDIENTE_APROBACION : EstadoReserva.ACTIVA;
+        
+        if (estadoInicial == EstadoReserva.PENDIENTE_APROBACION) {
+            log.info("Reserva marcada para aprobación. Costo estimado: {} supera el límite de {}", totalEstimado, LIMITE_PREMIUM);
+        }
 
         Reserva reserva = Reserva.builder()
                 .documentoCliente(request.getDocumentoCliente())
@@ -79,14 +90,19 @@ public class ReservaServiceImpl implements IReservaService {
                 .build();
 
         reserva = reservaRepository.save(reserva);
+        log.info("Reserva registrada exitosamente con ID: {} y estado: {}", reserva.getId(), estadoInicial);
         return mapToResponse(reserva);
     }
 
     @Override
     @Transactional
     public FinalizarReservaResponse finalizarReserva(String documentoCliente, Integer salonId) {
+        log.info("Finalizando reserva para cliente: {} en salón ID: {}", documentoCliente, salonId);
         Reserva reserva = reservaRepository.findByDocumentoClienteAndSalonIdAndEstado(documentoCliente, salonId, EstadoReserva.ACTIVA)
-                .orElseThrow(() -> new BadRequestException("No se encontró una reserva activa para el documento y salón especificados"));
+                .orElseThrow(() -> {
+                    log.warn("No se encontró reserva activa para finalizar: cliente {}, salón {}", documentoCliente, salonId);
+                    return new BadRequestException("No se encontró una reserva activa para el documento y salón especificados");
+                });
 
         reserva.setEstado(EstadoReserva.FINALIZADA);
         LocalDateTime fechaFinReal = LocalDateTime.now();
@@ -104,6 +120,7 @@ public class ReservaServiceImpl implements IReservaService {
         BigDecimal totalCobrado = horasEfectivas.multiply(reserva.getSalon().getCostoHora());
 
         historicoReservaService.guardarHistorico(reserva, totalCobrado, fechaFinReal);
+        log.info("Reserva ID: {} finalizada con éxito. Total cobrado: {}", reserva.getId(), totalCobrado);
 
         return FinalizarReservaResponse.builder()
                 .mensaje("Reserva finalizada")
@@ -114,6 +131,7 @@ public class ReservaServiceImpl implements IReservaService {
     @Override
     @Transactional(readOnly = true)
     public List<ReservaResponse> listarReservasActivas(Integer salonId) {
+        log.info("Listando reservas activas para el salón ID: {}", salonId);
         return reservaRepository.findBySalonIdAndEstado(salonId, EstadoReserva.ACTIVA).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -122,6 +140,7 @@ public class ReservaServiceImpl implements IReservaService {
     @Override
     @Transactional(readOnly = true)
     public List<ReservaResponse> buscarPorDocumento(String documento) {
+        log.info("Buscando reservas activas para el documento cliente: {}", documento);
         return reservaRepository.findByDocumentoClienteContainingAndEstado(documento, EstadoReserva.ACTIVA).stream()
                 .map(r -> mapToResponse(r))
                 .collect(Collectors.toList());
@@ -130,14 +149,20 @@ public class ReservaServiceImpl implements IReservaService {
     @Override
     @Transactional
     public AccionReservaResponse aprobarReserva(Integer id) {
+        log.info("Intentando aprobar reserva ID: {}", id);
         Reserva reserva = reservaRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Reserva no encontrada"));
+                .orElseThrow(() -> {
+                    log.warn("Intento de aprobación fallido: Reserva ID {} no encontrada", id);
+                    return new BadRequestException("Reserva no encontrada");
+                });
 
         if (!reserva.getEstado().equals(EstadoReserva.PENDIENTE_APROBACION)) {
+            log.warn("Intento de aprobación fallido: Reserva ID {} no está en estado PENDIENTE_APROBACION", id);
             throw new BadRequestException("Solo se pueden aprobar reservas en estado PENDIENTE_APROBACION");
         }
 
         if (reserva.getFechaInicio().isBefore(LocalDateTime.now())) {
+            log.warn("Expirando reserva ID {} automáticamente: La fecha de inicio ya pasó", id);
             reserva.setEstado(EstadoReserva.EXPIRADA);
             reservaRepository.save(reserva);
             throw new BadRequestException("No se puede aprobar esta reserva porque su fecha de inicio ya pasó");
@@ -147,6 +172,7 @@ public class ReservaServiceImpl implements IReservaService {
         reservaRepository.save(reserva);
         
         notificacionHelper.enviarNotificacion(reserva, "La reserva ha sido aprobada y ahora está ACTIVA.");
+        log.info("Reserva ID: {} aprobada exitosamente", id);
         
         return AccionReservaResponse.builder()
                 .mensaje("Reserva aprobada exitosamente")
@@ -157,10 +183,15 @@ public class ReservaServiceImpl implements IReservaService {
     @Override
     @Transactional
     public AccionReservaResponse rechazarReserva(Integer id, RechazarReservaRequest request) {
+        log.info("Intentando rechazar reserva ID: {}", id);
         Reserva reserva = reservaRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Reserva no encontrada"));
+                .orElseThrow(() -> {
+                    log.warn("Intento de rechazo fallido: Reserva ID {} no encontrada", id);
+                    return new BadRequestException("Reserva no encontrada");
+                });
 
         if (!reserva.getEstado().equals(EstadoReserva.PENDIENTE_APROBACION)) {
+            log.warn("Intento de rechazo fallido: Reserva ID {} no está en estado PENDIENTE_APROBACION", id);
             throw new BadRequestException("Solo se pueden rechazar reservas en estado PENDIENTE_APROBACION");
         }
 
@@ -169,6 +200,7 @@ public class ReservaServiceImpl implements IReservaService {
         reservaRepository.save(reserva);
 
         notificacionHelper.enviarNotificacion(reserva, "La reserva ha sido rechazada con motivo: " + request.getMotivo());
+        log.info("Reserva ID: {} rechazada exitosamente por: {}", id, request.getMotivo());
 
         return AccionReservaResponse.builder()
                 .mensaje("Reserva rechazada exitosamente con motivo: " + request.getMotivo())
@@ -179,12 +211,15 @@ public class ReservaServiceImpl implements IReservaService {
     @Override
     @Transactional
     public void expirarReservasPendientes() {
+        log.info("Iniciando proceso automático de expiración de reservas pendientes...");
         List<Reserva> pendientes = reservaRepository.findByEstadoAndFechaCreacionBefore(EstadoReserva.PENDIENTE_APROBACION, LIMITE_EXPIRACION);
         
         pendientes.forEach(r -> {
+            log.info("Expirando reserva ID: {} por superar el tiempo límite de 48h", r.getId());
             r.setEstado(EstadoReserva.EXPIRADA);
             reservaRepository.save(r);
         });
+        log.info("Proceso de expiración finalizado. Total expiradas: {}", pendientes.size());
     }
 
     private ReservaResponse mapToResponse(Reserva reserva) {
